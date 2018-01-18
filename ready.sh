@@ -38,15 +38,6 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service ssh restart
 
-# set repo
-cat > /etc/apt/sources.list <<END2
-deb http://cdn.debian.net/debian wheezy main contrib non-free
-deb http://security.debian.org/ wheezy/updates main contrib non-free
-deb http://packages.dotdeb.org wheezy all
-END2
-wget "http://www.dotdeb.org/dotdeb.gpg"
-cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
-
 # remove unused
 apt-get -y --purge remove samba*;
 apt-get -y --purge remove apache2*;
@@ -56,7 +47,7 @@ apt-get -y purge sendmail*
 apt-get -y remove sendmail*
 
 # update
-apt-get update; apt-get -y upgrade;
+apt-get update
 
 # install webserver
 apt-get -y install nginx php5-fpm php5-cli
