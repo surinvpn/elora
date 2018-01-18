@@ -2,7 +2,7 @@
 
 #Requirement
 if [ ! -e /usr/bin/curl ]; then
-    apt-get -y update --fix-missing && apt-get -y upgrade
+    apt-get -y update --fix-missing
 	apt-get -y install curl git nano ufw stunnel4
 fi
 
@@ -14,26 +14,6 @@ if [ $MYIP = "" ]; then
    MYIP=`ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1`;
 fi
 MYIP2="s/xxxxxxxxx/$MYIP/g";
-
-#check jika script sudah pernah diinput
-scriptname='sshvpn';
-mkdir -p /var/lib/setup-log
-echo " " >> /var/lib/setup-log/setup.txt
-scriptchecker=`cat /var/lib/setup-log/setup.txt | grep $scriptname`;
-if [ "$scriptchecker" != "" ]; then
-		clear
-		echo -e " ";
-		echo -e "Error! Anda sudah pernah memasukkan script ini sebelumnya";
-		echo -e "Script ini hanya bisa diinstall 1x saja biar ga eror!";
-		echo -e "---";
-		echo -e "Jika Anda sebelumnya gagal dalam instalasi, Mohon untuk reinstall OS VPS Anda lebih dulu!";
-		echo -e "Anda dapat mereinstall OS VPS atau menghapus script yang pernah diinstall";
-		echo -e " ";
-        exit 0;
-	else
-		echo "";
-fi
-echo "$scriptname" >> /var/lib/setup-log/setup.txt
 
 # go to root
 cd
@@ -204,8 +184,8 @@ sed -i 's|export KEY_ORG="Fort-Funston"|export KEY_ORG="www.globalssh.net"|' /et
 sed -i 's|export KEY_EMAIL="me@myhost.mydomain"|export KEY_EMAIL="admin@globalssh.net"|' /etc/openvpn/easy-rsa/2.0/vars
 sed -i 's|export KEY_EMAIL=mail@host.domain|export KEY_EMAIL=admin@globalssh.net|' /etc/openvpn/easy-rsa/2.0/vars
 sed -i 's|export KEY_OU=changeme|export KEY_OU=GlobalSSH|' /etc/openvpn/easy-rsa/2.0/vars
-sed -i 's|export KEY_CN=changeme|export KEY_CN="GlobalSSH"|' /etc/openvpn/easy-rsa/2.0/vars
-sed -i 's|export KEY_NAME=changeme|export KEY_NAME=globalssh.net|' /etc/openvpn/easy-rsa/2.0/vars
+sed -i 's|export KEY_CN=changeme|export KEY_CN="server"|' /etc/openvpn/easy-rsa/2.0/vars
+sed -i 's|export KEY_NAME=changeme|export KEY_NAME=server|' /etc/openvpn/easy-rsa/2.0/vars
 # Buat PKI
 . /etc/openvpn/easy-rsa/2.0/vars
 . /etc/openvpn/easy-rsa/2.0/clean-all
@@ -556,7 +536,7 @@ chmod +x /root/limit.sh
 chmod +x /root/ban.sh
 screen -AmdS limit /root/limit.sh
 screen -AmdS ban /root/ban.sh
-clear
+
 cd
 
 # finalisasi
@@ -571,8 +551,7 @@ service dropbear restart
 service fail2ban restart
 service squid3 restart
 service webmin restart
-#clearing history
-history -c
+
 
 # info
 clear
