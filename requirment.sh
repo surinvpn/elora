@@ -2,7 +2,7 @@
 
 #Requirement
 if [ ! -e /usr/bin/curl ]; then
-    apt-get -y update --fix-missing && apt-get -y upgrade
+    apt-get -y update --fix-missing
 	apt-get -y install curl git nano ufw stunnel4
 fi
 
