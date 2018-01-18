@@ -412,7 +412,8 @@ service dropbear restart
 #install stunnel4
 cd
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-sed -i $MYIP2 /etc/stunnel/stunnel.conf;
+sed -i $MYIP2 /etc/stunnel/stunnel.conf
+/etc/init.d/stunnel4 restart
 
 # install vnstat gui
 cd /home/vps/public_html/
@@ -437,7 +438,7 @@ cd
 # install squid3
 apt-get -y install squid3
 wget -O /etc/squid3/squid.conf "https://github.com/malikshi/elora/raw/master/squid.conf"
-sed -i $MYIP2 /etc/squid3/squid.conf;
+sed -i $MYIP2 /etc/squid3/squid.conf
 service squid3 restart
 
 
