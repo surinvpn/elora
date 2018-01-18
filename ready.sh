@@ -221,7 +221,7 @@ export EASY_RSA="${EASY_RSA:-.}"
 # DH params
 . /etc/openvpn/easy-rsa/2.0/build-dh
 # Setting Server
-cat > /etc/openvpn/server.conf <<-END
+cat > /etc/openvpn/server.conf <<-END5
 port 1194
 proto tcp
 dev tun
@@ -249,9 +249,9 @@ persist-key
 persist-tun
 status server-vpn.log
 verb 3
-END
+END5
 
-cat > /etc/openvpn/udp25.conf <<-END
+cat > /etc/openvpn/udp25.conf <<-END6
 port 25
 proto udp
 dev tun
@@ -279,9 +279,9 @@ persist-key
 persist-tun
 status server-vpn.log
 verb 3
-END
+END6
 
-cat > /etc/openvpn/udpssl53.conf <<-END
+cat > /etc/openvpn/udpssl53.conf <<-END7
 port 53
 proto udp
 dev tun
@@ -309,7 +309,7 @@ persist-key
 persist-tun
 status server-vpn.log
 verb 3
-END
+END7
 
 sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
 cd /etc/openvpn/easy-rsa/2.0/keys
@@ -321,7 +321,7 @@ cd /etc/openvpn/
 
 #Create OpenVPN Config
 mkdir -p /home/vps/public_html
-cat > /home/vps/public_html/client.ovpn <<-END
+cat > /home/vps/public_html/client.ovpn <<-END8
 # OpenVPN Configuration GlobalSSH Server
 # (Official @www.globalssh.net)
 client
@@ -343,7 +343,7 @@ route-method exe
 route-delay 2
 remote $MYIP 1194
 cipher AES-128-CBC
-END
+END8
 echo '<ca>' >> /home/vps/public_html/client.ovpn
 cat /etc/openvpn/ca.crt >> /home/vps/public_html/client.ovpn
 echo '</ca>' >> /home/vps/public_html/client.ovpn
@@ -492,15 +492,15 @@ echo 'service dropbear restart' >> /etc/rc.local
 echo "0 0 * * * root /usr/local/bin/user-expire" > /etc/cron.d/user-expire
 cd
 
-cat > /root/ban.sh <<END3
+cat > /root/ban.sh <<END9
 #!/bin/bash
 #/usr/local/bin/user-ban
-END3
+END9
 
-cat > /root/limit.sh <<END3
+cat > /root/limit.sh <<END10
 #!/bin/bash
 #/usr/local/bin/user-limit
-END3
+END10
 
 cd /usr/local/bin
 wget -O premium-script.tar.gz "https://github.com/malikshi/elora/raw/master/premium-script.tar.gz"
