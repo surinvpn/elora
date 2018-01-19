@@ -130,6 +130,7 @@ service dropbear restart
 
 #install stunnel4
 cd
+apt-get -y install stunnel4
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 wget -O /etc/stunnel/stunnel.conf "https://github.com/malikshi/elora/raw/master/stunnel.conf"
 sed -i $MYIP2 /etc/stunnel/stunnel.conf
