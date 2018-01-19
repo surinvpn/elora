@@ -187,6 +187,11 @@ cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt} /etc/openvpn
 ls /etc/openvpn
 sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
 service openvpn restart
+wget -O /etc/openvpn/globalssh.ovpn "https://github.com/malikshi/elora/raw/master/globalssh.ovpn"
+echo '<ca>' >> /etc/openvpn/globalssh.ovpn
+cat /etc/openvpn/ca.crt >> /etc/openvpn/globalssh.ovpn
+echo '</ca>' >> /etc/openvpn/globalssh.ovpn
+sed -i $MYIP2 /etc/openvpn/globalssh.ovpn
 
 
 # install webmin
