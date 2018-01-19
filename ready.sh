@@ -111,6 +111,7 @@ apt-get -y install dropbear
 wget -O /etc/default/dropbear "https://github.com/malikshi/elora/raw/master/dropbear"
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
+sed -i 's/obscure/minlen=5/g' /etc/pam.d/common-password
 service ssh restart
 service dropbear restart
 
