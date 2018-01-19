@@ -275,7 +275,7 @@ echo "   - Auto-Reboot : [on]"  | tee -a log-install.txt
 echo "   - IPv6        : [off]"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Informasi Aplikasi & Port"  | tee -a log-install.txt
-echo "   - OpenVPN     : TCP 1194 UDP 25 UDP SSL 53"  | tee -a log-install.txt
+echo "   - OpenVPN     : TCP 1194 UDP 25 110 UDP SSL 53"  | tee -a log-install.txt
 echo "   - OpenSSH     : 22"  | tee -a log-install.txt
 echo "   - OpenSSH-SSL : 444"  | tee -a log-install.txt
 echo "   - Dropbear    : 143, 54793"  | tee -a log-install.txt
@@ -283,7 +283,6 @@ echo "   - Dropbear-SSL: 443, 80"  | tee -a log-install.txt
 echo "   - Squid Proxy : 8000 (limit to IP Server)"  | tee -a log-install.txt
 echo "   - Squid-SSL   : 8080,3128 (limit to IP Server)"  | tee -a log-install.txt
 echo "   - Badvpn      : 7300"  | tee -a log-install.txt
-echo "   - Nginx       : 85"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Informasi Tools Dalam Server"  | tee -a log-install.txt
 echo "   - htop"  | tee -a log-install.txt
