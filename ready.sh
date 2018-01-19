@@ -201,9 +201,8 @@ cp /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/openvpn/
 cd
 echo 'deb http://download.webmin.com/download/repository sarge contrib' >>/etc/apt/sources.list
 echo 'deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib' >>/etc/apt/sources.list
-wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
-apt-get -y update
-apt-get -y install webmin
+wget http://www.webmin.com/jcameron-key.asc
+apt-key add jcameron-key.asc
 apt-get -y update && apt-get -y install webmin
 
 #autoban & filtering
