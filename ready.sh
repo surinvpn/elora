@@ -132,6 +132,20 @@ cd
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 wget -O /etc/stunnel/stunnel.conf "https://github.com/malikshi/elora/raw/master/stunnel.conf"
 sed -i $MYIP2 /etc/stunnel/stunnel.conf
+
+#setting cert
+country=SG
+state=Mapletree
+locality=Bussiness
+organization=GLOBALSSH
+organizationalunit=coowner
+commonname=server
+email=ibnumalik@yandex.com
+
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 /etc/init.d/stunnel4 restart
 
 # install fail2ban
@@ -264,8 +278,8 @@ echo "Informasi Aplikasi & Port"  | tee -a log-install.txt
 echo "   - OpenVPN     : TCP 1194 UDP 25 UDP SSL 53"  | tee -a log-install.txt
 echo "   - OpenSSH     : 22"  | tee -a log-install.txt
 echo "   - OpenSSH-SSL : 444"  | tee -a log-install.txt
-echo "   - Dropbear    : 143, 80"  | tee -a log-install.txt
-echo "   - Dropbear-SSL: 443, 54793"  | tee -a log-install.txt
+echo "   - Dropbear    : 143, 54793"  | tee -a log-install.txt
+echo "   - Dropbear-SSL: 443, 80"  | tee -a log-install.txt
 echo "   - Squid Proxy : 8000 (limit to IP Server)"  | tee -a log-install.txt
 echo "   - Squid-SSL   : 8080,3128 (limit to IP Server)"  | tee -a log-install.txt
 echo "   - Badvpn      : 7300"  | tee -a log-install.txt
