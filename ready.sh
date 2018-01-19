@@ -161,6 +161,33 @@ wget -O /etc/squid3/squid.conf "https://github.com/malikshi/elora/raw/master/squ
 sed -i $MYIP2 /etc/squid3/squid.conf
 service squid3 restart
 
+#install vpn
+apt-get -y install openvpn easy-rsa
+wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
+wget -O /etc/openvpn/udp25.conf "https://github.com/malikshi/elora/raw/master/udp25.conf"
+wget -O /etc/openvpn/udpssl53.conf "https://github.com/malikshi/elora/raw/master/udpssl53.conf"
+cp -r /usr/share/easy-rsa/ /etc/openvpn
+mkdir /etc/openvpn/easy-rsa/keys
+wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
+openssl dhparam -out /etc/openvpn/dh2048.pem 2048
+cd /etc/openvpn/easy-rsa
+. ./vars
+./clean-all
+# Buat Sertifikat
+export EASY_RSA="${EASY_RSA:-.}"
+"$EASY_RSA/pkitool" --initca $*
+# buat key server
+export EASY_RSA="${EASY_RSA:-.}"
+"$EASY_RSA/pkitool" --server server
+# seting KEY CN
+export EASY_RSA="${EASY_RSA:-.}"
+"$EASY_RSA/pkitool" client
+#copy to openvpn folder
+cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt} /etc/openvpn
+ls /etc/openvpn
+sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
+service openvpn restart
+
 
 # install webmin
 cd
