@@ -28,6 +28,7 @@ ufw allow 5353
 ufw allow 1900
 ufw allow 53/udp
 ufw allow 25/udp
+ufw allow 110/udp
 ufw allow 54793
 ufw allow 85
 ufw allow 9000
