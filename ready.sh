@@ -192,6 +192,7 @@ echo '<ca>' >> /etc/openvpn/globalssh.ovpn
 cat /etc/openvpn/ca.crt >> /etc/openvpn/globalssh.ovpn
 echo '</ca>' >> /etc/openvpn/globalssh.ovpn
 sed -i $MYIP2 /etc/openvpn/globalssh.ovpn
+cp /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/openvpn/
 
 
 # install webmin
@@ -288,6 +289,7 @@ service fail2ban restart
 service squid3 restart
 service webmin restart
 /etc/init.d/stunnel4 restart
+service openvpn restart
 
 
 # info
