@@ -1,2 +1,2 @@
 # elora
-installer ssh+vpn+ssl
+private
