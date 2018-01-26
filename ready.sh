@@ -93,15 +93,26 @@ sudo swapon -s
 clear
 
 # install badvpn
-wget -O /usr/bin/badvpn-udpgw "https://github.com/malikshi/elora/raw/master/badvpn-udpgw"
-if [ "$OS" == "x86_64" ]; then
-  wget -O /usr/bin/badvpn-udpgw "https://github.com/malikshi/elora/raw/master/badvpn-udpgw64"
-fi
-sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
-chmod +x /usr/bin/badvpn-udpgw
-screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
+cd
+#wget -O /usr/bin/badvpn-udpgw "https://github.com/malikshi/elora/raw/master/badvpn-udpgw"
+#if [ "$OS" == "x86_64" ]; then
+#  wget -O /usr/bin/badvpn-udpgw "https://github.com/malikshi/elora/raw/master/badvpn-udpgw64"
+#fi
+#sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
+#chmod +x /usr/bin/badvpn-udpgw
+#screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
+apt-get -y install cmake make gcc libc6-dev
+wget https://github.com/ambrop72/badvpn/archive/1.999.130.tar.gz
+tar xf 1.999.130.tar.gz
+mkdir badvpn-build
+cd badvpn-build
+cmake ~/1.999.130 -DBUILD_NOTHING_BY_DEFAULT=1 -DBUILD_UDPGW=1 -DBUILD_TUN2SOCKS=1
+make install
+sed -i '$ i\screen -AmdS /usr/local/bin/badvpn-udpgw --listen-addr 127.0.0.1:7300 > /dev/nul &' /etc/rc.local
+
 
 #install ssh
+cd
 echo 'MaxAuthTries 2' >>/etc/ssh/sshd_config
 echo 'Banner /etc/issue.net' >>/etc/ssh/sshd_config
 
