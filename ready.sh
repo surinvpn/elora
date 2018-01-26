@@ -108,7 +108,7 @@ mkdir badvpn-build
 cd badvpn-build
 cmake ~/badvpn-1.999.130 -DBUILD_NOTHING_BY_DEFAULT=1 -DBUILD_UDPGW=1 -DBUILD_TUN2SOCKS=1
 make install
-sed -i '$ i\screen -AmdS /usr/local/bin/badvpn-udpgw --listen-addr 127.0.0.1:7300 > /dev/nul &' /etc/rc.local
+sed -i '$ i\/usr/local/bin/badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
 
 
 #install ssh
