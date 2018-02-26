@@ -34,7 +34,7 @@ check host tun1 with address 10.8.0.1
         icmp type echo count 5 with timeout 15 seconds
     then restart
 
-check process vpn-network-udp with pidfile /var/run/openvpn/udpssl53.pid
+check process vpn-network-udps with pidfile /var/run/openvpn/udpssl53.pid
    start program = "/usr/sbin/service openvpn start udpssl53"
    stop program = "/usr/sbin/service openvpn stop udpssl53"
 
@@ -77,8 +77,8 @@ check process tinyproxy with pidfile /var/run/tinyproxy/tinyproxy.pid
 # squid3
 check process squid3 with pidfile /var/run/squid3.pid
    group proxy
-   start program = "/etc/init.d/squid3 start"
-   stop  program = "/etc/init.d/squid3 stop"
+   start program = "/usr/sbin/service squid3 start"
+   stop  program = "/usr/sbin/service squid3 stop"
    if failed host localhost port 8000
      send "GET /monit-check HTTP/1.0\r\n\r\n"
      expect "HTTP/[0-9\.]{3} 400 .*\r\n"
