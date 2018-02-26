@@ -33,6 +33,7 @@ ufw allow 54793
 ufw allow 85
 ufw allow 9000
 ufw allow 7300
+ufw allow 8888
 ufw disable
 sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw
 wget -O /etc/ufw/before.rules "https://github.com/malikshi/elora/raw/master/before.rules"
