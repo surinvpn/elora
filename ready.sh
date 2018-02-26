@@ -216,10 +216,12 @@ wget http://www.webmin.com/jcameron-key.asc
 apt-key add jcameron-key.asc
 apt-get -y update && apt-get -y install webmin
 
-# install webmin
+# install tinyproxy & monir
 cd
 apt-get -y install tinyproxy monit
 wget -O /etc/monit/monitrc "https://github.com/malikshi/elora/raw/master/monitrc"
+/etc/init.d monit reload
+/etc/init.d monit start
 #autoban & filtering
 cd
 sed -i '$ i\screen -AmdS limit /root/limit.sh' /etc/rc.local
@@ -230,6 +232,8 @@ sed -i '$ i\service fail2ban restart' /etc/rc.local
 sed -i '$ i\service dropbear restart' /etc/rc.local
 sed -i '$ i\sudo service squid3 restart' /etc/rc.local
 sed -i '$ i\/etc/init.d/stunnel4 restart' /etc/rc.local
+sed -i '$ i\/etc/init.d/monit reload' /etc/rc.local
+sed -i '$ i\/etc/init.d/monit start' /etc/rc.local
 echo "0 0 * * * root /usr/local/bin/user-expire" > /etc/cron.d/user-expire
 cd
 
