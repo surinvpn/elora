@@ -38,7 +38,7 @@ check process vpn-network-udp with pidfile /var/run/openvpn/udpssl53.pid
    start program = "/usr/sbin/service openvpn start udpssl53"
    stop program = "/usr/sbin/service openvpn stop udpssl53"
 
-check host tun1 with address 10.9.0.1
+check host tun2 with address 10.9.0.1
     start program = "/usr/sbin/service openvpn start udpssl53"
     stop program = "/usr/sbin/service openvpn stop udpssl53"
     if failed
