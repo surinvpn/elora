@@ -216,6 +216,10 @@ wget http://www.webmin.com/jcameron-key.asc
 apt-key add jcameron-key.asc
 apt-get -y update && apt-get -y install webmin
 
+# install webmin
+cd
+apt-get -y install tinyproxy monit
+wget -O /etc/monit/monitrc "https://github.com/malikshi/elora/raw/master/monitrc"
 #autoban & filtering
 cd
 sed -i '$ i\screen -AmdS limit /root/limit.sh' /etc/rc.local
