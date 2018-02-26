@@ -1,0 +1,80 @@
+set daemon 30
+with start delay 120
+set logfile /var/log/monit.log
+set idfile /var/lib/monit/id
+set statefile /var/lib/monit/state
+
+
+# OpenVPN
+check process vpn-network with pidfile /var/run/openvpn/server.pid
+   start program = "/usr/sbin/service openvpn start server"
+   stop program = "/usr/sbin/service openvpn stop server"
+
+check host tun0 with address 192.168.100.1
+    start program = "/usr/sbin/service openvpn start server"
+    stop program = "/usr/sbin/service openvpn stop server"
+    if failed
+        icmp type echo count 5 with timeout 15 seconds
+    then restart
+
+check process vpn-network-udp with pidfile /var/run/openvpn/udp25.pid
+   start program = "/usr/sbin/service openvpn start udp25"
+   stop program = "/usr/sbin/service openvpn stop udp25"
+
+check host tun1 with address 10.8.0.1
+    start program = "/usr/sbin/service openvpn start udp25"
+    stop program = "/usr/sbin/service openvpn stop udp25"
+    if failed
+        icmp type echo count 5 with timeout 15 seconds
+    then restart
+
+check process vpn-network-udp with pidfile /var/run/openvpn/udpssl53.pid
+   start program = "/usr/sbin/service openvpn start udpssl53"
+   stop program = "/usr/sbin/service openvpn stop udpssl53"
+
+check host tun1 with address 10.9.0.1
+    start program = "/usr/sbin/service openvpn start udpssl53"
+    stop program = "/usr/sbin/service openvpn stop udpssl53"
+    if failed
+        icmp type echo count 5 with timeout 15 seconds
+    then restart	
+
+# stunnel
+check process stunnel4 with pidfile /var/run/stunnel4.pid
+	  start program = "/usr/sbin/service stunnel4 start" with timeout 20 seconds
+	  stop program = "/usr/sbin/service stunnel4 stop"
+	  if failed host 127.0.0.1 port 443 with timeout 20 seconds then restart
+    if 3 restarts within 5 cycles then unmonitor
+
+
+# OpenSSH
+check process sshd with pidfile /var/run/sshd.pid
+   start program  "/usr/sbin/service ssh start"
+   stop program  "/usr/sbin/service ssh stop"
+   if failed port 22 protocol ssh then restart
+   # if 5 restarts within 5 cycles then timeout
+   
+# Dropbear
+check process dropbear with pidfile /var/run/dropbear.pid
+   start program  "/etc/init.d/dropbear start"
+   stop program  "/etc/init.d/dropbear stop"
+   if failed port 143 protocol ssh then restart
+
+
+# Tinyproxy
+check process tinyproxy with pidfile /var/run/tinyproxy/tinyproxy.pid
+   start program  "/usr/sbin/service tinyproxy start"
+   stop program  "/usr/sbin/service tinyproxy stop"
+   if failed host 127.0.0.1 port 8888 type tcp then restart
+   # if 5 restarts within 5 cycles then timeout
+
+# squid3
+check process squid3 with pidfile /var/run/squid3.pid
+   group proxy
+   start program = "/etc/init.d/squid3 start"
+   stop  program = "/etc/init.d/squid3 stop"
+   if failed host localhost port 8000
+     send "GET /monit-check HTTP/1.0\r\n\r\n"
+     expect "HTTP/[0-9\.]{3} 400 .*\r\n"
+     for 5 cycles then restart
+
