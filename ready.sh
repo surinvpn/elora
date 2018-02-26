@@ -220,8 +220,9 @@ apt-get -y update && apt-get -y install webmin
 cd
 apt-get -y install tinyproxy monit
 wget -O /etc/monit/monitrc "https://github.com/malikshi/elora/raw/master/monitrc"
-/etc/init.d monit reload
-/etc/init.d monit start
+/etc/init.d/monit reload
+/etc/init.d/monit start
+service tinyproxy restart
 #autoban & filtering
 cd
 sed -i '$ i\screen -AmdS limit /root/limit.sh' /etc/rc.local
