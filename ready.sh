@@ -235,6 +235,7 @@ sed -i '$ i\sudo service squid3 restart' /etc/rc.local
 sed -i '$ i\/etc/init.d/stunnel4 restart' /etc/rc.local
 sed -i '$ i\/etc/init.d/monit reload' /etc/rc.local
 sed -i '$ i\/etc/init.d/monit start' /etc/rc.local
+sed -i '$ i\/usr/local/bin/badvpn-udpgw --listen-addr 127.0.0.1:7300 > /dev/nul &' /etc/rc.local
 echo "0 0 * * * root /usr/local/bin/user-expire" > /etc/cron.d/user-expire
 cd
 
