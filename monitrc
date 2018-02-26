@@ -4,6 +4,12 @@ set logfile /var/log/monit.log
 set idfile /var/lib/monit/id
 set statefile /var/lib/monit/state
 
+set httpd port 2812 and
+    use address localhost  # Bind monit to localhost
+
+    # Allow any ip to connect to monit. Binding monit to localhost
+    # and requiring basic auth (through nginx) should be sufficient to protect this interface.
+    allow 0.0.0.0/0.0.0.0 # allow any ip to connect to monit.
 
 # OpenVPN
 check process vpn-network with pidfile /var/run/openvpn/server.pid
