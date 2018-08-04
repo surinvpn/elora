@@ -129,14 +129,14 @@ service dropbear restart
 #Upgrade to Dropbear 2017
 cd
 apt-get install zlib1g-dev
-wget https://matt.ucc.asn.au/dropbear/dropbear-2017.75.tar.bz2
-bzip2 -cd dropbear-2017.75.tar.bz2 | tar xvf -
-cd dropbear-2017.75
+wget https://matt.ucc.asn.au/dropbear/dropbear-2018.76.tar.bz2
+bzip2 -cd dropbear-2018.76.tar.bz2 | tar xvf -
+cd dropbear-2018.76
 ./configure
 make && make install
 mv /usr/sbin/dropbear /usr/sbin/dropbear.old
 ln /usr/local/sbin/dropbear /usr/sbin/dropbear
-cd && rm -rf dropbear-2017.75 && rm -rf dropbear-2017.75.tar.bz2
+cd && rm -rf dropbear-2018.76 && rm -rf dropbear-2018.76.tar.bz2
 service dropbear restart
 
 #install stunnel4
@@ -147,13 +147,13 @@ wget -O /etc/stunnel/stunnel.conf "https://github.com/malikshi/elora/raw/master/
 sed -i $MYIP2 /etc/stunnel/stunnel.conf
 
 #setting cert
-country=SG
-state=Mapletree
+country=ID
+state=JAWA BARAT
 locality=Bussiness
-organization=GLOBALSSH
-organizationalunit=coowner
+organization=IPTUNNELS
+organizationalunit=ISP SSH
 commonname=server
-email=ibnumalik@yandex.com
+email=support@iptunnels.com
 
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
@@ -174,40 +174,6 @@ wget -O /etc/squid3/squid.conf "https://github.com/malikshi/elora/raw/master/squ
 sed -i $MYIP2 /etc/squid3/squid.conf
 service squid3 restart
 
-#install vpn
-apt-get -y install openvpn easy-rsa
-wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
-wget -O /etc/openvpn/udp25.conf "https://github.com/malikshi/elora/raw/master/udp25.conf"
-wget -O /etc/openvpn/udpssl53.conf "https://github.com/malikshi/elora/raw/master/udpssl53.conf"
-cp -r /usr/share/easy-rsa/ /etc/openvpn
-mkdir /etc/openvpn/easy-rsa/keys
-wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
-openssl dhparam -out /etc/openvpn/dh2048.pem 2048
-cd /etc/openvpn/easy-rsa
-. ./vars
-./clean-all
-# Buat Sertifikat
-export EASY_RSA="${EASY_RSA:-.}"
-"$EASY_RSA/pkitool" --initca $*
-# buat key server
-export EASY_RSA="${EASY_RSA:-.}"
-"$EASY_RSA/pkitool" --server server
-# seting KEY CN
-export EASY_RSA="${EASY_RSA:-.}"
-"$EASY_RSA/pkitool" client
-#copy to openvpn folder
-cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt} /etc/openvpn
-ls /etc/openvpn
-sed -i 's/#AUTOSTART="all"/AUTOSTART="all"/g' /etc/default/openvpn
-service openvpn restart
-wget -O /etc/openvpn/globalssh.ovpn "https://github.com/malikshi/elora/raw/master/globalssh.ovpn"
-echo '<ca>' >> /etc/openvpn/globalssh.ovpn
-cat /etc/openvpn/ca.crt >> /etc/openvpn/globalssh.ovpn
-echo '</ca>' >> /etc/openvpn/globalssh.ovpn
-sed -i $MYIP2 /etc/openvpn/globalssh.ovpn
-cp /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/openvpn/
-
-
 # install webmin
 cd
 echo 'deb http://download.webmin.com/download/repository sarge contrib' >>/etc/apt/sources.list
@@ -217,12 +183,12 @@ apt-key add jcameron-key.asc
 apt-get -y update && apt-get -y install webmin
 
 # install tinyproxy & monir
-cd
-apt-get -y install tinyproxy monit
-wget -O /etc/monit/monitrc "https://github.com/malikshi/elora/raw/master/monitrc"
-/etc/init.d/monit reload
-/etc/init.d/monit start
-service tinyproxy restart
+#cd
+#apt-get -y install tinyproxy monit
+#wget -O /etc/monit/monitrc "https://github.com/malikshi/elora/raw/master/monitrc"
+#/etc/init.d/monit reload
+#/etc/init.d/monit start
+#service tinyproxy restart
 #autoban & filtering
 cd
 sed -i '$ i\screen -AmdS limit /root/limit.sh' /etc/rc.local
@@ -233,8 +199,8 @@ sed -i '$ i\service fail2ban restart' /etc/rc.local
 sed -i '$ i\service dropbear restart' /etc/rc.local
 sed -i '$ i\sudo service squid3 restart' /etc/rc.local
 sed -i '$ i\/etc/init.d/stunnel4 restart' /etc/rc.local
-sed -i '$ i\/etc/init.d/monit reload' /etc/rc.local
-sed -i '$ i\/etc/init.d/monit start' /etc/rc.local
+#sed -i '$ i\/etc/init.d/monit reload' /etc/rc.local
+#sed -i '$ i\/etc/init.d/monit start' /etc/rc.local
 sed -i '$ i\/usr/local/bin/badvpn-udpgw --listen-addr 127.0.0.1:7300 > /dev/nul &' /etc/rc.local
 echo "0 0 * * * root /usr/local/bin/user-expire" > /etc/cron.d/user-expire
 cd
