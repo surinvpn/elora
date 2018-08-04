@@ -148,10 +148,10 @@ sed -i $MYIP2 /etc/stunnel/stunnel.conf
 
 #setting cert
 country=ID
-state=JAWA BARAT
+state=JAWABARAT
 locality=Bussiness
 organization=IPTUNNELS
-organizationalunit=ISP SSH
+organizationalunit=ISPSSH
 commonname=server
 email=support@iptunnels.com
 
