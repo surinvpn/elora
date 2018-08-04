@@ -3,41 +3,9 @@
 #Requirement
 if [ ! -e /usr/bin/curl ]; then
 	apt-get -y update --fix-missing
-	apt-get -y install curl git nano ufw stunnel4
+	apt-get -y install curl git nano stunnel4
 fi
 
-ufw allow OpenSSH
-ufw allow 222/tcp
-ufw allow 636/tcp
-ufw allow 1194/tcp
-ufw allow 443/tcp
-ufw allow 10000/tcp
-ufw allow 80/tcp
-ufw allow 8080/tcp
-ufw allow 3128/tcp
-ufw allow 27015/udp
-ufw allow 143/tcp
-ufw allow 8530/tcp
-ufw allow 2812/tcp
-ufw allow 22507/tcp
-ufw allow 444/tcp
-ufw allow 8000/tcp
-ufw allow 67
-ufw allow 68
-ufw allow 5353
-ufw allow 1900
-ufw allow 53/udp
-ufw allow 25/udp
-ufw allow 110/udp
-ufw allow 54793
-ufw allow 85
-ufw allow 9000
-ufw allow 7300
-ufw allow 8888
-ufw disable
-sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/g' /etc/default/ufw
-wget -O /etc/ufw/before.rules "https://github.com/malikshi/elora/raw/master/before.rules"
-ufw enable -y
 iptables -N BLOCKACCESS
 iptables -I INPUT -p tcp --dport 22 -m string --algo bm --string 'User-Agent: Bittorrent' -j BLOCKACCESS
 iptables -I INPUT -p tcp --dport 22 -m string --algo bm --string 'User-Agent: BitTorrent protocol' -j BLOCKACCESS
