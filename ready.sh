@@ -188,14 +188,17 @@ cp -r /usr/share/easy-rsa/ /etc/openvpn
 mkdir /etc/openvpn/easy-rsa/keys
 wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
 openssl dhparam -out /etc/openvpn/dh2048.pem 2048
-cd /etc/openvpn/easy-rsa
+wget -O /etc/openvpn/easy-rsa/keys/keys.tar "https://github.com/malikshi/elora/raw/master/keys.tar"
+cd /etc/openvpn/easy-rsa/keys/
+tar xf keys.tar
+cd /etc/openvpn/easy-rsa/
 openvpn --genkey --secret keys/ta.key
-
-
 cd /etc/openvpn
-#cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
-#ls /etc/openvpn
+cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
+ls /etc/openvpn
 echo 1 > /proc/sys/net/ipv4/ip_forward
+sed -i 's|#AUTOSTART="all"|AUTOSTART="all"|' /etc/default/openvpn
+service openvpn restart
 
 # install tinyproxy & monir
 #cd
