@@ -3,7 +3,7 @@
 #Requirement
 if [ ! -e /usr/bin/curl ]; then
 	apt-get -y update --fix-missing
-	apt-get -y install curl git nano stunnel4
+	apt-get -y install curl git nano stunnel4 openvpn easy-rsa
 fi
 
 iptables -N BLOCKACCESS
@@ -130,6 +130,7 @@ iptables -I INPUT -m string --algo bm --string 'auth.api.np.ac.playstation.ne' -
 iptables -I OUTPUT -m string --algo bm --string 'auth.api.np.ac.playstation.ne' -j BLOCKS
 iptables -I FORWARD -m string --algo bm --string 'auth.api.np.ac.playstation.ne' -j BLOCKS
 iptables -A BLOCKS -j DROP
+iptables -t nat -I POSTROUTING -s 10.8.0.0/24 -o venet0 -j MASQUERADE
 iptables-save
 apt-get -y install iptables-persistent
 invoke-rc.d iptables-persistent save
