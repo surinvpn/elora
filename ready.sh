@@ -182,6 +182,21 @@ wget http://www.webmin.com/jcameron-key.asc
 apt-key add jcameron-key.asc
 apt-get -y update && apt-get -y install webmin
 
+# install openvpn
+cd
+cp -r /usr/share/easy-rsa/ /etc/openvpn
+mkdir /etc/openvpn/easy-rsa/keys
+wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
+openssl dhparam -out /etc/openvpn/dh2048.pem 2048
+cd /etc/openvpn/easy-rsa
+openvpn --genkey --secret keys/ta.key
+
+
+cd /etc/openvpn
+#cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
+#ls /etc/openvpn
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
 # install tinyproxy & monir
 #cd
 #apt-get -y install tinyproxy monit
