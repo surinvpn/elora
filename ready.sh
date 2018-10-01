@@ -192,6 +192,7 @@ openssl dhparam -out /etc/openvpn/dh2048.pem 2048
 wget -O /etc/openvpn/easy-rsa/keys/keys.tar "https://github.com/malikshi/elora/raw/master/keys.tar"
 cd /etc/openvpn/easy-rsa/keys/
 tar xf keys.tar
+rm keys.tar
 cd /etc/openvpn/easy-rsa/
 openvpn --genkey --secret keys/ta.key
 cd /etc/openvpn
