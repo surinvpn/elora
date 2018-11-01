@@ -13,5 +13,13 @@ sed -i -e 's/\r$//' requirment.sh
 sed -i -e 's/\r$//' ready.sh
 ./requirment.sh
 
-2. FINISHING
+2. do this script
+
   ./ready.sh
+  
+3. finishing, add some text to support firewall port 25000 udp for openvpn,
+
+
+iptables -I FORWARD -s 10.9.0.0/24 -j ACCEPT
+iptables -I INPUT -p udp --dport 25000 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.9.0.0/24 ! -d 10.9.0.0/24 -j SNAT --to ipadresss
