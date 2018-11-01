@@ -14,5 +14,4 @@ sed -i -e 's/\r$//' ready.sh
 ./requirment.sh
 
 2. FINISHING
-
-./ready.sh
+  ./ready.sh
