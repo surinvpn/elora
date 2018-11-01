@@ -200,6 +200,7 @@ cd
 #cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
 #ls /etc/openvpn
 #echo 1 > /proc/sys/net/ipv4/ip_forward
+wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
 wget -O /etc/openvpn/server-udp.conf "https://github.com/malikshi/elora/raw/master/server-udp.conf"
 sed -i 's|#AUTOSTART="all"|AUTOSTART="all"|' /etc/default/openvpn
 service openvpn restart
