@@ -147,13 +147,13 @@ wget -O /etc/stunnel/stunnel.conf "https://github.com/malikshi/elora/raw/master/
 sed -i $MYIP2 /etc/stunnel/stunnel.conf
 
 #setting cert
-country=ID
-state=JAWABARAT
+country=SG
+state=MAPLETREE
 locality=Bussiness
-organization=IPTUNNELS
+organization=globalssh
 organizationalunit=ISPSSH
 commonname=server
-email=support@iptunnels.com
+email=support@globalssh
 
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
@@ -184,21 +184,21 @@ apt-get -y update && apt-get -y install webmin
 
 # install openvpn
 cd
-cp -r /usr/share/easy-rsa/ /etc/openvpn
-mkdir /etc/openvpn/easy-rsa/keys
-wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
-wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
-openssl dhparam -out /etc/openvpn/dh2048.pem 2048
-wget -O /etc/openvpn/easy-rsa/keys/keys.tar "https://github.com/malikshi/elora/raw/master/keys.tar"
-cd /etc/openvpn/easy-rsa/keys/
-tar xf keys.tar
-rm keys.tar
-cd /etc/openvpn/easy-rsa/
-openvpn --genkey --secret keys/ta.key
-cd /etc/openvpn
-cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
-ls /etc/openvpn
-echo 1 > /proc/sys/net/ipv4/ip_forward
+#cp -r /usr/share/easy-rsa/ /etc/openvpn
+#mkdir /etc/openvpn/easy-rsa/keys
+#wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
+#wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
+#openssl dhparam -out /etc/openvpn/dh2048.pem 2048
+#wget -O /etc/openvpn/easy-rsa/keys/keys.tar "https://github.com/malikshi/elora/raw/master/keys.tar"
+#cd /etc/openvpn/easy-rsa/keys/
+#tar xf keys.tar
+#rm keys.tar
+#cd /etc/openvpn/easy-rsa/
+#openvpn --genkey --secret keys/ta.key
+#cd /etc/openvpn
+#cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
+#ls /etc/openvpn
+#echo 1 > /proc/sys/net/ipv4/ip_forward
 sed -i 's|#AUTOSTART="all"|AUTOSTART="all"|' /etc/default/openvpn
 service openvpn restart
 
