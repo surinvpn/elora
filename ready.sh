@@ -29,7 +29,7 @@ sed -i '$ i\echo "nameserver 8.8.8.8" > /etc/resolv.conf' /etc/rc.local
 sed -i '$ i\echo "nameserver 8.8.4.4" >> /etc/resolv.conf' /etc/rc.local
 
 # install wget and curl
-apt-get update;apt-get -y install wget curl;
+apt-get update;apt-get -y install wget curl zlib1g-dev zlib1g;
 
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
