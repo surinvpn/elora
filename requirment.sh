@@ -130,8 +130,8 @@ iptables -I INPUT -m string --algo bm --string 'auth.api.np.ac.playstation.ne' -
 iptables -I OUTPUT -m string --algo bm --string 'auth.api.np.ac.playstation.ne' -j BLOCKS
 iptables -I FORWARD -m string --algo bm --string 'auth.api.np.ac.playstation.ne' -j BLOCKS
 iptables -A BLOCKS -j DROP
-iptables -t nat -I POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
-iptables -t nat -I POSTROUTING -s 10.9.0.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.8.0.0/24 -o venet0 -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.9.0.0/24 -o venet0 -j MASQUERADE
 iptables-save
 apt-get -y install iptables-persistent
 invoke-rc.d iptables-persistent save
