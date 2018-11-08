@@ -171,8 +171,8 @@ cd
 
 # install squid3
 apt-get -y install squid3
-wget -O /etc/squid3/squid.conf "https://github.com/malikshi/elora/raw/master/squid.conf"
-sed -i $MYIP2 /etc/squid3/squid.conf
+wget -O /etc/squid/squid.conf "https://github.com/malikshi/elora/raw/master/squid.conf"
+sed -i $MYIP2 /etc/squid/squid.conf
 service squid3 restart
 
 # install webmin
