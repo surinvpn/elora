@@ -5,7 +5,8 @@ PREQUISITE:
 
 NOW
 1. SETUP firewall
-	wget https://github.com/malikshi/elora/raw/master/ready.sh --no-check-certificate \r\n
+``bash
+	wget https://github.com/malikshi/elora/raw/master/ready.sh --no-check-certificate
 	wget https://github.com/malikshi/elora/raw/master/requirment.sh --no-check-certificate
 	wget https://github.com/malikshi/elora/raw/master/readySSH.sh --no-check-certificate
 	chmod +x ready.sh
@@ -15,7 +16,7 @@ NOW
 	sed -i -e 's/\r$//' ready.sh
 	sed -i -e 's/\r$//' readySSH.sh
 	./requirment.sh
-
+```
 2. do this script
 
 	./ready.sh
