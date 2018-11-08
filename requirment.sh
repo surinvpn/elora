@@ -134,4 +134,5 @@ iptables -t nat -I POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 iptables -t nat -I POSTROUTING -s 10.9.0.0/24 -o eth0 -j MASQUERADE
 iptables-save
 apt-get -y install iptables-persistent
-invoke-rc.d iptables-persistent save
+#invoke-rc.d iptables-persistent save
+sudo netfilter-persistent save
