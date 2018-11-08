@@ -19,8 +19,8 @@ MYIP2="s/xxxxxxxxx/$MYIP/g";
 cd
 
 # disable ipv6
-echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
-sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
+#echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+#sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
 #Add DNS Server ipv4
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
@@ -94,13 +94,6 @@ clear
 
 # install badvpn
 cd
-#wget -O /usr/bin/badvpn-udpgw "https://github.com/malikshi/elora/raw/master/badvpn-udpgw"
-#if [ "$OS" == "x86_64" ]; then
-#  wget -O /usr/bin/badvpn-udpgw "https://github.com/malikshi/elora/raw/master/badvpn-udpgw64"
-#fi
-#sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
-#chmod +x /usr/bin/badvpn-udpgw
-#screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 apt-get -y install cmake make gcc libc6-dev
 wget https://github.com/ambrop72/badvpn/archive/1.999.130.tar.gz
 tar xf 1.999.130.tar.gz
@@ -151,10 +144,10 @@ sed -i $MYIP2 /etc/stunnel/stunnel.conf
 country=SG
 state=MAPLETREE
 locality=Bussiness
-organization=globalssh
+organization=IPTUNNELS
 organizationalunit=ISPSSH
 commonname=server
-email=support@globalssh
+email=admin@iptunnels.com
 
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
@@ -185,34 +178,21 @@ apt-get -y update && apt-get -y install webmin
 
 # install openvpn
 cd
-#cp -r /usr/share/easy-rsa/ /etc/openvpn
-#mkdir /etc/openvpn/easy-rsa/keys
-#wget -O /etc/openvpn/easy-rsa/vars "https://github.com/malikshi/elora/raw/master/vars"
 #wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
-#openssl dhparam -out /etc/openvpn/dh2048.pem 2048
-#wget -O /etc/openvpn/easy-rsa/keys/keys.tar "https://github.com/malikshi/elora/raw/master/keys.tar"
-#cd /etc/openvpn/easy-rsa/keys/
-#tar xf keys.tar
-#rm keys.tar
-#cd /etc/openvpn/easy-rsa/
-#openvpn --genkey --secret keys/ta.key
-#cd /etc/openvpn
-#cp /etc/openvpn/easy-rsa/keys/{server.crt,server.key,ca.crt,ta.key} /etc/openvpn
-#ls /etc/openvpn
-#echo 1 > /proc/sys/net/ipv4/ip_forward
-wget -O /etc/openvpn/server.conf "https://github.com/malikshi/elora/raw/master/server.conf"
-wget -O /etc/openvpn/server-udp.conf "https://github.com/malikshi/elora/raw/master/server-udp.conf"
+#wget -O /etc/openvpn/server-udp.conf "https://github.com/malikshi/elora/raw/master/server-udp.conf"
+cd /etc/openvpn/
+wget -O /etc/openvpn/openvpn-auth-pam.so https://github.com/malikshi/elora/raw/master/openvpn-auth-pam.so
+echo "plugin /etc/openvpn/openvpn-auth-pam.so /etc/pam.d/login" >> /etc/openvpn/server.conf
+echo "verify-client-cert none" >> /etc/openvpn/server.conf
+echo "username-as-common-name" >> /etc/openvpn/server.conf
+
+cp server.conf server-udp.conf
+sed -i 's|1194|25000|' /etc/openvpn/server-udp.conf
+sed -i 's|tcp6|udp6|' /etc/openvpn/server-udp.conf
+sed -i 's|10.8.0.0|10.9.0.0|' /etc/openvpn/server-udp.conf
 sed -i 's|#AUTOSTART="all"|AUTOSTART="all"|' /etc/default/openvpn
 service openvpn restart
 
-# install tinyproxy & monir
-#cd
-#apt-get -y install tinyproxy monit
-#wget -O /etc/monit/monitrc "https://github.com/malikshi/elora/raw/master/monitrc"
-#/etc/init.d/monit reload
-#/etc/init.d/monit start
-#service tinyproxy restart
-#autoban & filtering
 cd
 sed -i '$ i\screen -AmdS limit /root/limit.sh' /etc/rc.local
 sed -i '$ i\screen -AmdS ban /root/ban.sh' /etc/rc.local
