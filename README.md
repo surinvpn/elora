@@ -5,7 +5,7 @@ PREQUISITE:
 
 NOW
 1. SETUP firewall
-	wget https://github.com/malikshi/elora/raw/master/ready.sh --no-check-certificate
+	wget https://github.com/malikshi/elora/raw/master/ready.sh --no-check-certificate \r\n
 	wget https://github.com/malikshi/elora/raw/master/requirment.sh --no-check-certificate
 	wget https://github.com/malikshi/elora/raw/master/readySSH.sh --no-check-certificate
 	chmod +x ready.sh
