@@ -185,10 +185,11 @@ wget -O /etc/openvpn/openvpn-auth-pam.so https://github.com/malikshi/elora/raw/m
 echo "plugin /etc/openvpn/openvpn-auth-pam.so /etc/pam.d/login" >> /etc/openvpn/server.conf
 echo "verify-client-cert none" >> /etc/openvpn/server.conf
 echo "username-as-common-name" >> /etc/openvpn/server.conf
+echo "duplicate-cn" >> /etc/openvpn/server.conf
 
 cp server.conf server-udp.conf
 sed -i 's|1194|53|' /etc/openvpn/server-udp.conf
-sed -i 's|tcp6|udp6|' /etc/openvpn/server-udp.conf
+sed -i 's|tcp|udp|' /etc/openvpn/server-udp.conf
 sed -i 's|10.8.0.0|10.9.0.0|' /etc/openvpn/server-udp.conf
 sed -i 's|#AUTOSTART="all"|AUTOSTART="all"|' /etc/default/openvpn
 service openvpn restart
