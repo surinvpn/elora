@@ -87,9 +87,9 @@ chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 echo '/swapfile none swap sw 0 0' >>/etc/fstab
-sudo sysctl vm.swappiness=40
-sudo sysctl vm.vfs_cache_pressure=50
-sudo swapon -s
+sysctl vm.swappiness=40
+sysctl vm.vfs_cache_pressure=50
+swapon -s
 clear
 
 # install badvpn
@@ -205,7 +205,7 @@ sed -i '$ i\screen -AmdS limit /root/limit.sh' /etc/rc.d/rc.local
 sed -i '$ i\screen -AmdS ban /root/ban.sh' /etc/rc.d/rc.local
 sed -i '$ i\service fail2ban restart' /etc/rc.local
 sed -i '$ i\service dropbear restart' /etc/rc.local
-sed -i '$ i\sudo service squid3 restart' /etc/rc.local
+sed -i '$ i\service squid3 restart' /etc/rc.local
 sed -i '$ i\/etc/init.d/stunnel4 restart' /etc/rc.local
 #sed -i '$ i\/etc/init.d/monit reload' /etc/rc.local
 #sed -i '$ i\/etc/init.d/monit start' /etc/rc.local
