@@ -33,6 +33,6 @@ sed -i -e 's/\r$//' readySSH.sh
 ```sh
 	nano /etc/rc.local
 	iptables -I FORWARD -s 10.9.0.0/24 -j ACCEPT
-	iptables -I INPUT -p udp --dport 25000 -j ACCEPT
+	iptables -I INPUT -p udp --dport 587 -j ACCEPT
 	iptables -t nat -A POSTROUTING -s 10.9.0.0/24 ! -d 10.9.0.0/24 -j SNAT --to ipublic
 ```
