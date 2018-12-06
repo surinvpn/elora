@@ -106,7 +106,7 @@ sed -i '$ i\/usr/local/bin/badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.lo
 
 #install ssh
 cd
-#echo 'Port 143' >>/etc/ssh/sshd_config
+echo 'Port 143' >>/etc/ssh/sshd_config
 echo 'MaxAuthTries 2' >>/etc/ssh/sshd_config
 echo 'Banner /etc/issue.net' >>/etc/ssh/sshd_config
 
